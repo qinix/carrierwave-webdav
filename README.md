@@ -1,24 +1,50 @@
-# Carrierwave::WebDAV
+# CarrierWave for WebDAV
 
-TODO: Write a gem description
+This gem adds support for WebDAV to
+[CarrierWave](https://github.com/jnicklas/carrierwave/)
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Install the latest release:
 
-    gem 'carrierwave-webdav'
+    gem install carrierwave-webdav
 
-And then execute:
+Require it in your code:
 
-    $ bundle
+    require 'carrierwave/webdav'
 
-Or install it yourself as:
+Or, in Rails you can add it to your Gemfile:
 
-    $ gem install carrierwave-webdav
+    gem 'carrierwave-webdav', :require => 'carrierwave/webdav'
 
-## Usage
+## Getting Started
 
-TODO: Write usage instructions here
+Follow the "Getting Started" directions in the main
+[Carrierwave repository](https://raw.github.com/jnicklas/carrierwave/).
+
+## Using WebDAV store
+
+In Rails, add WebDAV settings to `config/initializers/carrierwave.rb`
+
+```ruby
+CarrierWave.configure do |config|
+  config.storage = :webdav
+  config.webdav_server = 'https://your.webdav_server.com/dav' # Your WebDAV url.
+  config.webdav_username = 'your webdav username'
+  config.webdav_password = 'your webdav password'
+end
+```
+
+In your uploader, set the storage to `:webdav`:
+
+```ruby
+class AvatarUploader < CarrierWave::Uploader::Base
+  storage :webdav
+end
+```
+
+Since WebDAV doesn't make the files available via HTTP, you'll need to stream
+them yourself. In Rails for example, you could use the `send_data` method.
 
 ## Contributing
 
@@ -27,3 +53,4 @@ TODO: Write usage instructions here
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
