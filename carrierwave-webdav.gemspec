@@ -5,7 +5,7 @@ require 'carrierwave/webdav/version'
 
 Gem::Specification.new do |gem|
   gem.name          = "carrierwave-webdav"
-  gem.version       = Carrierwave::WebDAV::VERSION
+  gem.version       = CarrierWave::WebDAV::VERSION
   gem.authors       = ["Qinix"]
   gem.email         = ["i@qinix.com"]
   gem.description   = %q{WebDAV support for CarrierWave}
