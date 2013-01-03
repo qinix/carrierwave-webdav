@@ -65,12 +65,11 @@ module CarrierWave
         end
 
         def length
+          read.bytesize
         end
 
         def delete
-        end
-
-        def content_type
+          HTTParty.delete(fullurl, options)
         end
 
         alias :content_length :length

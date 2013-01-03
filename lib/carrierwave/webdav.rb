@@ -1,7 +1,7 @@
 require 'carrierwave'
-require 'carrierwave/store/webdav'
+require 'carrierwave/storage/webdav'
 
-CarrierWave::Storage.autoload :WebDAV, 'carrierwave/store/webdav'
+CarrierWave::Storage.autoload :WebDAV, 'carrierwave/storage/webdav'
 
 class CarrierWave::Uploader::Base
   add_config :webdav_username
