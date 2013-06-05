@@ -4,3 +4,4 @@ source 'https://rubygems.org'
 gemspec
 gem 'rake'
 gem 'webmock', :require => 'webmock/rspec'
+gem 'coveralls', require: false
