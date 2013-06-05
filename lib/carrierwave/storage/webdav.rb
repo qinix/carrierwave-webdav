@@ -56,12 +56,12 @@ module CarrierWave
         end
 
         def read
-          HTTParty.get(fullurl, options).body
+          HTTParty.get(url, options).body
         end
 
         def write(file)
           mkcol
-          HTTParty.put(fullurl, options.merge({ body: file }))
+          HTTParty.put(url, options.merge({ body: file }))
         end
 
         def length
@@ -69,7 +69,11 @@ module CarrierWave
         end
 
         def delete
-          HTTParty.delete(fullurl, options)
+          HTTParty.delete(url, options)
+        end
+
+        def url
+          "#{server}/#{path}"
         end
 
         alias :content_length :length
@@ -77,10 +81,7 @@ module CarrierWave
         alias :size :length
 
       private
-        def fullurl
-          "#{server}/#{path}"
-        end
-        
+
         def mkcol
           dirs = []
           path.split('/')[0...-1].each do |dir|
