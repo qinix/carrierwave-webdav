@@ -1,5 +1,7 @@
 # CarrierWave for WebDAV
 
+[![Build Status](https://travis-ci.org/qinix/carrierwave-webdav.png?branch=master)](https://travis-ci.org/qinix/carrierwave-webdav)
+
 This gem adds support for WebDAV to
 [CarrierWave](https://github.com/carrierwaveuploader/carrierwave/)
 
