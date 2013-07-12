@@ -1,7 +1,7 @@
 # CarrierWave for WebDAV
 
 This gem adds support for WebDAV to
-[CarrierWave](https://github.com/jnicklas/carrierwave/)
+[CarrierWave](https://github.com/carrierwaveuploader/carrierwave/)
 
 ## Installation
 
@@ -20,7 +20,7 @@ Or, in Rails you can add it to your Gemfile:
 ## Getting Started
 
 Follow the "Getting Started" directions in the main
-[Carrierwave repository](https://raw.github.com/jnicklas/carrierwave/).
+[Carrierwave repository](https://github.com/carrierwaveuploader/carrierwave/).
 
 ## Using WebDAV store
 
@@ -30,6 +30,7 @@ In Rails, add WebDAV settings to `config/initializers/carrierwave.rb`
 CarrierWave.configure do |config|
   config.storage = :webdav
   config.webdav_server = 'https://your.webdav_server.com/dav' # Your WebDAV url.
+  # config.webdav_write_server = 'https://secure.your.webdavserver.com/dav/' # This is an optional attribute. It can save on one server and read from another server. (Contributed by @eychu. Thanks)
   config.webdav_username = 'your webdav username'
   config.webdav_password = 'your webdav password'
 end
