@@ -46,13 +46,12 @@ module CarrierWave
           @uploader = uploader
           @server = uploader.webdav_server
           @server.sub! /\/$/, ''
+          @write_server = uploader.webdav_write_server
+          @write_server.sub!(/\/$/, '') if @write_server
           @username = uploader.webdav_username
           @password = uploader.webdav_password || ''
-          if @username
-            @options = { basic_auth: { username: @username, password: @password }}
-          else
-            @options = {}
-          end
+          @options = {}
+          @options = { basic_auth: { username: @username, password: @password } } if @username
         end
 
         def read
@@ -61,7 +60,7 @@ module CarrierWave
 
         def write(file)
           mkcol
-          HTTParty.put(url, options.merge({ body: file }))
+          HTTParty.put(write_url, options.merge({ body: file }))
         end
 
         def length
@@ -69,7 +68,7 @@ module CarrierWave
         end
 
         def delete
-          HTTParty.delete(url, options)
+          HTTParty.delete(write_url, options)
         end
 
         def url
@@ -82,13 +81,18 @@ module CarrierWave
 
       private
 
+        def write_url
+          @write_server ? "#{@write_server}/#{path}" : url
+        end
+
         def mkcol
           dirs = []
           path.split('/')[0...-1].each do |dir|
             dirs << "#{dirs[-1]}/#{dir}"
           end # Make path like a/b/c/t.txt to array ['/a', '/a/b', '/a/b/c']
+          use_server = @write_server ? @write_server : server
           dirs.each do |dir|
-            HTTParty.mkcol("#{server}#{dir}", options)
+            HTTParty.mkcol("#{use_server}#{dir}", options)
           end # Make collections recursively
         end
       end # File
