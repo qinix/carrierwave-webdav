@@ -58,6 +58,10 @@ module CarrierWave
           HTTParty.get(url, options).body
         end
 
+        def headers
+          HTTParty.get(url, options).headers
+        end
+
         def write(file)
           mkcol
           HTTParty.put(write_url, options.merge({ body: file }))
@@ -65,6 +69,10 @@ module CarrierWave
 
         def length
           read.bytesize
+        end
+
+        def content_type
+          headers.content_type
         end
 
         def delete
