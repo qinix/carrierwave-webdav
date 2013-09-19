@@ -58,6 +58,14 @@ describe CarrierWave::Storage::WebDAV do
     expect(@file.size).to eq(webdav_file.size)
   end
 
+  it 'assigns file content type to attribute' do
+    stub_mkcol @uri
+    stub_put @uri
+    webdav_file = @storage.store!(@file)
+    stub_get @uri
+    expect(@file.content_type).to eq(webdav_file.content_type)
+  end
+
   it 'should url equal' do
     stub_mkcol @uri
     stub_put @uri
