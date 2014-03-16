@@ -52,6 +52,7 @@ module CarrierWave
           @password = uploader.webdav_password || ''
           @options = {}
           @options = { basic_auth: { username: @username, password: @password } } if @username
+          @create_dirs = !uploader.webdav_autocreates_dirs
         end
 
         def read
@@ -63,7 +64,10 @@ module CarrierWave
         end
 
         def write(file)
-          mkcol
+          if @create_dirs
+            mkcol
+          end
+
           HTTParty.put(write_url, options.merge({ body: file }))
         end
 
