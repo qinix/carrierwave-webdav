@@ -13,7 +13,7 @@ describe CarrierWave::Storage::WebDAV do
     end
 
     @uploader = CarrierWave::Uploader::Base.new
-    @uploader.stub! store_path: 'uploads/test.txt'
+    @uploader.stub store_path: 'uploads/test.txt'
 
     @storage = CarrierWave::Storage::WebDAV.new(@uploader)
     @file = CarrierWave::SanitizedFile.new(file_path('test.txt'))
@@ -62,7 +62,7 @@ describe CarrierWave::Storage::WebDAV do
     stub_mkcol @uri
     stub_put @uri
     webdav_file = @storage.store!(@file)
-    stub_get @uri
+    stub_head @uri
     expect(@file.content_type).to eq(webdav_file.content_type)
   end
 

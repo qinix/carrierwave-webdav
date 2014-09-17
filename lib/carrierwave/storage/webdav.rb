@@ -56,19 +56,31 @@ module CarrierWave
         end
 
         def read
-          HTTParty.get(url, options).body
+          res = HTTParty.get(url, options)
+          if res.code != 200
+            raise CarrierWave::IntegrityError.new("Can't download a file: #{res.inspect}")
+          end
+          res.body
         end
 
         def headers
-          HTTParty.get(url, options).headers
+          res = HTTParty.head(url, options)
+          if res.code != 200
+            raise CarrierWave::IntegrityError.new("Can't headers for a file: #{res.inspect}")
+          end
+          res.headers
         end
 
         def write(file)
           if @create_dirs
-            mkcol
+            res = mkcol
           end
 
-          HTTParty.put(write_url, options.merge({ body: file }))
+          res = HTTParty.put(write_url, options.merge({ body: file }))
+          if res.code != 201
+            raise CarrierWave::IntegrityError.new("Can't put a new file: #{res.inspect}")
+          end
+          res
         end
 
         def length
@@ -80,7 +92,11 @@ module CarrierWave
         end
 
         def delete
-          HTTParty.delete(write_url, options)
+          res = HTTParty.delete(write_url, options)
+          if res.code != 200
+            raise CarrierWave::IntegrityError.new("Can't delete a file: #{res.inspect}")
+          end
+          res
         end
 
         def url
@@ -104,7 +120,10 @@ module CarrierWave
           end # Make path like a/b/c/t.txt to array ['/a', '/a/b', '/a/b/c']
           use_server = @write_server ? @write_server : server
           dirs.each do |dir|
-            HTTParty.mkcol("#{use_server}#{dir}", options)
+            res = HTTParty.mkcol("#{use_server}#{dir}", options)
+            unless [200, 201, 207].include? res.code
+              raise CarrierWave::IntegrityError.new("Can't create a new collection: #{res.inspect}")
+            end
           end # Make collections recursively
         end
       end # File
