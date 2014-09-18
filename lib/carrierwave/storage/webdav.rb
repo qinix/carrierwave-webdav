@@ -121,7 +121,7 @@ module CarrierWave
           use_server = @write_server ? @write_server : server
           dirs.each do |dir|
             res = HTTParty.mkcol("#{use_server}#{dir}", options)
-            unless [200, 201, 207].include? res.code
+            unless [200, 201, 207, 409].include? res.code
               raise CarrierWave::IntegrityError.new("Can't create a new collection: #{res.inspect}")
             end
           end # Make collections recursively
