@@ -77,7 +77,7 @@ module CarrierWave
           end
 
           res = HTTParty.put(write_url, options.merge({ body: file }))
-          if res.code != 201
+          if res.code != 201 and res.code != 204
             raise CarrierWave::IntegrityError.new("Can't put a new file: #{res.inspect}")
           end
           res
@@ -93,7 +93,7 @@ module CarrierWave
 
         def delete
           res = HTTParty.delete(write_url, options)
-          if res.code != 200
+          if res.code != 200 and res.code != 404
             raise CarrierWave::IntegrityError.new("Can't delete a file: #{res.inspect}")
           end
           res
