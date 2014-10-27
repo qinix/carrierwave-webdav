@@ -93,7 +93,7 @@ module CarrierWave
 
         def delete
           res = HTTParty.delete(write_url, options)
-          if res.code != 200 and res.code != 404
+          if res.code != 200 and res.code != 204 and res.code != 404
             raise CarrierWave::IntegrityError.new("Can't delete a file: #{res.inspect}")
           end
           res
