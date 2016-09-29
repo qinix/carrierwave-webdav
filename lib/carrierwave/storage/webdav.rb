@@ -100,7 +100,11 @@ module CarrierWave
         end
 
         def url
-          "#{server}/#{path}"
+          if host = uploader.asset_host
+            host.respond_to?(:call) ? host.call(self) : [host, path].join('/')
+          else
+            "#{server}/#{path}"
+          end
         end
 
         alias :content_length :length

@@ -91,4 +91,33 @@ describe CarrierWave::Storage::WebDAV do
     expect(@file.read).to eq(webdav_file.read)
   end
 
+  describe '#image_url' do
+    let(:root) { Pathname.new(@file.path).dirname }
+    let(:path) { @uploader.path.sub(root.to_path, '') }
+
+    before do
+      CarrierWave.configure do |config|
+        config.asset_host = host
+        config.root = root
+      end
+    end
+
+    context 'when asset_host is set' do
+      let(:host) { 'http://asset.host' }
+
+      it 'path contains asset_host' do
+        @uploader.cache!(@file)
+        expect(@uploader.url).to eq [host, path].join
+      end
+    end
+
+    context 'when asset_host is not set' do
+      let(:host) { nil }
+
+      it 'path does not contain asset_host' do
+        @uploader.cache!(@file)
+        expect(@uploader.url).to eq path
+      end
+    end
+  end
 end
