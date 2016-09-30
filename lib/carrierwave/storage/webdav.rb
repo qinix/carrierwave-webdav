@@ -56,7 +56,7 @@ module CarrierWave
         end
 
         def read
-          res = HTTParty.get(url, options)
+          res = HTTParty.get(read_url, options)
           if res.code != 200
             raise CarrierWave::IntegrityError.new("Can't download a file: #{res.inspect}")
           end
@@ -64,7 +64,7 @@ module CarrierWave
         end
 
         def headers
-          res = HTTParty.head(url, options)
+          res = HTTParty.head(read_url, options)
           if res.code != 200
             raise CarrierWave::IntegrityError.new("Can't headers for a file: #{res.inspect}")
           end
@@ -103,7 +103,7 @@ module CarrierWave
           if host = uploader.asset_host
             host.respond_to?(:call) ? host.call(self) : [host, path].join('/')
           else
-            "#{server}/#{path}"
+            read_url
           end
         end
 
@@ -113,8 +113,12 @@ module CarrierWave
 
       private
 
+        def read_url
+          "#{server}/#{path}"
+        end
+
         def write_url
-          @write_server ? "#{@write_server}/#{path}" : url
+          @write_server ? "#{@write_server}/#{path}" : read_url
         end
 
         def mkcol
