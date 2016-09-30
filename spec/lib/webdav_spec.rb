@@ -91,7 +91,7 @@ describe CarrierWave::Storage::WebDAV do
     expect(@file.read).to eq(webdav_file.read)
   end
 
-  describe '#image_url' do
+  describe 'File#url' do
     let(:root) { Pathname.new(@file.path).dirname }
     let(:path) { @uploader.path.sub(root.to_path, '') }
 
