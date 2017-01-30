@@ -12,7 +12,7 @@ module CarrierWave
       #
       # === Returns
       #
-      # [ CarrierWave::Storage::WebDAV::File ] a sanitized file
+      # [ CarrierWave::WebDAV::File ] a sanitized file
       #
       def cache!(file)
         cached = build_webdav_file(uploader.cache_path)
@@ -28,7 +28,7 @@ module CarrierWave
       #
       # === Returns
       #
-      # [ CarrierWave::Storage::WebDAV::File ] a sanitized file
+      # [ CarrierWave::WebDAV::File ] a sanitized file
       #
       def retrieve_from_cache!(identifier)
         build_webdav_file(uploader.cache_path(identifier))
@@ -61,7 +61,7 @@ module CarrierWave
       #
       # === Returns
       #
-      # [ CarrierWave::Store::WebDAV::File ] a sanitized file
+      # [ CarrierWave::WebDAV::File ] a sanitized file
       #
       def store!(file)
         stored = build_webdav_file(uploader.store_path)
@@ -77,7 +77,7 @@ module CarrierWave
       #
       # === Returns
       #
-      # [ CarrierWave::Store::WebDAV::File ] a sanitized file
+      # [ CarrierWave::WebDAV::File ] a sanitized file
       #
       def retrieve!(identifier)
         build_webdav_file(uploader.store_path(identifier))
