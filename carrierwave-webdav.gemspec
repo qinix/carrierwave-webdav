@@ -19,5 +19,4 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency 'carrierwave'
   gem.add_dependency 'httparty'
-
 end
