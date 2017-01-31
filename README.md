@@ -1,6 +1,7 @@
 # CarrierWave for WebDAV
 
 [![Build Status](https://travis-ci.org/qinix/carrierwave-webdav.png?branch=master)](https://travis-ci.org/qinix/carrierwave-webdav)
+[![Coverage Status](https://coveralls.io/repos/github/qinix/carrierwave-webdav/badge.svg?branch=master)](https://coveralls.io/github/qinix/carrierwave-webdav?branch=master)
 
 This gem adds support for WebDAV to
 [CarrierWave](https://github.com/carrierwaveuploader/carrierwave/)
@@ -57,4 +58,3 @@ them yourself. In Rails for example, you could use the `send_data` method.
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
-
