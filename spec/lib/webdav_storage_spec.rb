@@ -18,6 +18,7 @@ describe CarrierWave::Storage::WebDAV do
 
     @storage = CarrierWave::Storage::WebDAV.new(@uploader)
     @file = CarrierWave::SanitizedFile.new(file_path('test.txt'))
+    @file.content_type = 'text/plain'
 
     # NOTE: specs fail with this options
     #

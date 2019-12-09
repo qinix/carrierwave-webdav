@@ -47,7 +47,7 @@ module CarrierWave
             body_stream: io,
             headers: {
               'Transfer-Encoding' => 'chunked',
-              'Content-Type' => 'application/octet-stream'
+              'Content-Type' => file.content_type
             }
           }))
         end
