@@ -59,7 +59,7 @@ module CarrierWave
       end
 
       def length
-        read.bytesize
+        headers.content_length
       end
 
       def content_type
