@@ -108,6 +108,9 @@ module CarrierWave
         end # Make path like a/b/c/t.txt to array ['/a', '/a/b', '/a/b/c']
         use_server = @write_server ? @write_server : server
         dirs.each do |dir|
+          # skip if dir already exists
+          next if HTTParty.propfind("#{use_server}#{dir}", options).code == 207
+
           res = HTTParty.mkcol("#{use_server}#{dir}", options)
           unless [200, 201, 207, 409].include? res.code
             raise CarrierWave::IntegrityError.new("Can't create a new collection: #{res.inspect}")
