@@ -16,7 +16,7 @@ module CarrierWave
       #
       def cache!(file)
         cached = build_webdav_file(uploader.cache_path)
-        cached.write(file.read)
+        cached.write(file)
         cached
       end
 
@@ -65,7 +65,7 @@ module CarrierWave
       #
       def store!(file)
         stored = build_webdav_file(uploader.store_path)
-        stored.write(file.read)
+        stored.write(file)
         stored
       end
 

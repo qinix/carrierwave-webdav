@@ -42,7 +42,16 @@ module CarrierWave
           res = mkcol
         end
 
-        res = HTTParty.put(write_url, options.merge({ body: file }))
+        ::File.open(file.file, 'rb') do |io|
+          res = HTTParty.put(write_url, options.merge({
+            body_stream: io,
+            headers: {
+              'Transfer-Encoding' => 'chunked',
+              'Content-Type' => file.content_type
+            }
+          }))
+        end
+
         if res.code != 201 and res.code != 204
           raise CarrierWave::IntegrityError.new("Can't put a new file: #{res.inspect}")
         end
@@ -50,7 +59,7 @@ module CarrierWave
       end
 
       def length
-        read.bytesize
+        headers.content_length
       end
 
       def content_type
